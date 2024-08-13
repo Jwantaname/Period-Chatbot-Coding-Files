@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>&#9654; Period chatbot &#127773</title>
+
+	<!-- for mobile screens -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="img/favicon.png">
+
+	<link rel="stylesheet" media="all" href="component/styles/setup.css">
+	<link rel="stylesheet" media="all" href="component/styles/says.css">
+	<link rel="stylesheet" media="all" href="component/styles/reply.css">
+	<link rel="stylesheet" media="all" href="component/styles/typing.css">
+  <link rel="stylesheet" media="all" href="component/styles/input.css">
+  <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,600,700&display=swap" rel="stylesheet">
+
+  
+	<style>
+	body {
+		background: #ffffff;
+	}
+	.bubble-container {
+		height: 100vh;
+	}
+	.bubble-container .input-wrap textarea {
+    margin: 0;
+	}
+  #draw {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    z-index: 1;
+	}
+  
+  
+	</style>
+</head>
+<body>
+
+<canvas id="draw" height="" width=""></canvas>
+
+<div id="chat">
+  <div class="header">
+    <img src="img/image.jpg" width="40px;">
+    <div>
+       <h1 style="font-size:30px"> &#9654; Period chatbot &#127773</h1>
+      <p>Hiiiiiii! i am a period chatbot!</p>
+    </div>
+  </div>
+</div>
+
+<script src="component/js/Bubbles.js"></script>
+<script>
+let chatWindow = new Bubbles(document.getElementById("chat"), "chatWindow", {
+  inputCallbackFn: function(o) {
+
+    let match = function(key) {
+      setTimeout(function() {
+        chatWindow.talk(convo, key) // restart current convo from point found in the answer
+      }, 600)
+    }
+
+    let strip = function(text) {
+      return text.toLowerCase().replace(/[\s.,\/#!$%\^&\*;:{}=\-_'"`~()]/g, "")
+    }
+
+    // search function
+    let found = false
+    o.convo[o.standingAnswer].reply.forEach(function(e, i) {
+      strip(e.human_response).includes(strip(o.input)) && o.input.length > 0
+        ? (found = e.bot_answer)
+        : found ? null : (found = false)
+    })
+    found ? match(found) : miss()
+  }
+})
+
+let convo = {
+
+// first section
+  
+intro: {
+  bot_says: ["&#127773Hey, i am a period chatbot! Period chatbot is here to discuss period.", "<img src=https://i.chzbgr.com/full/9314274816/h8D6FE9FE/oh-hi-there />"],
+    human_reply: [
+      {
+        human_response: "Nice,is this a private conversation?",
+        bot_answer: "goodquestion",
+      },
+      ]
+  },
+  
+  //second section
+
+    "goodquestion": {
+    bot_says: ["&#129296 Good question! The period chatbot will protect all of your information, no one will know this. What would you like to explore?"],
+    human_reply: [
+      {
+        human_response: "Tampon",
+        bot_answer: "TamponAnswer"
+      },
+      {
+        human_response: "Gender dysphoria",
+        bot_answer: "GenderDysAnswer"
+      },
+      {
+        human_response: "Pain",
+        bot_answer: "PainAnswer"
+      },
+      {
+        human_response: "Tracking",
+        bot_answer: "TrackingAnswer"
+      },
+    ]
+  },
+
+
+  //tampon section
+
+  "TamponAnswer": {
+    bot_says:[
+      "<a href=\"https://www.gov.scot/news/new-app-to-access-free-period-products/\" target=\"_blank\"> Here is a website that supply free tampons, feel free to check it out! </a>",
+      "&#9939If you are interested."
+     ],
+
+
+    human_reply: [
+      {
+        human_response: "Thank you that is great!&#128147",
+        bot_answer: "DrawingAnswer"
+
+      },
+
+    ]
+  },
+
+    //Gender dysphoria section
+
+    "GenderDysAnswer": {
+    bot_says: [
+      "<a href=\"https://helloclue.com/articles/cycle-a-z/what-it's-like-to-get-your-period-when-you're-trans/\" target=\"_blank\"> Please open this link, if you are interested!</a>",
+     
+     ],
+    human_reply: [
+      {
+        human_response: "Ahhh! &#129327Let me check it out!",
+        bot_answer: "DrawingAnswer"
+
+      },
+      {
+        human_response: "&#129488Hmmmmm，thank you!",
+        bot_answer: "DrawingAnswer"
+      },
+    ]
+  },
+
+  //pain section
+
+  "PainAnswer": {
+    bot_says: ["<a href=\"https://medlineplus.gov/periodpain.html//\" target=\"_blank\">Okey-dokey, here! Here are some ways to take care of yourself</a>."
+     ],
+
+
+    human_reply: [
+      {
+        human_response: "Ahhh! Let me check it out!&#128526",
+        bot_answer: "DrawingAnswer"
+
+      },
+      {
+        human_response: "Thank you for your recommendation!",
+        bot_answer: "DrawingAnswer"
+
+      },
+     
+     
+    ]
+  },
+
+  //tracking section
+
+  "TrackingAnswer": {
+    bot_says: ["Please do not worry about you personal information, I will not tell anyone.", "You could check the app called Flo, if you are interested."],
+    human_reply: [
+      {
+        human_response: "&#128064 Thank you!",
+        bot_answer: "DrawingAnswer "
+
+      },
+      {
+        human_response: "Yes, that would be great!",
+        bot_answer: "DrawingAnswer"
+      },
+    ]
+  },
+
+  //drawing section
+
+  "DrawingAnswer": {
+    bot_says: ["Would you like to draw your period? Just on the left side of the screen!&#128072"],
+    human_reply: [
+      {
+        human_response: "Yeah!&#128518",
+        bot_answer: "ArtAnswer"
+
+      },
+      {
+        human_response: "Nah.&#128528",
+        bot_answer: "GoodbyeAnswer"
+      },
+    ]
+  },
+
+  //art section
+
+  "ArtAnswer": {
+    bot_says: ["&#128444Your period is piece of art!"],
+    human_reply: [
+      {
+        human_response: "Awwwww! Cheers!&#128525",
+        bot_answer: "GoodbyeAnswer"
+
+      },
+      
+    ]
+  },
+  //goodbye section
+
+  "GoodbyeAnswer": {
+    bot_says: ["You can come to me when ever you want, see you!&#128075"],
+    human_reply: [
+      {
+        human_response: "See ya! !Take care!&#128075",
+        
+      },
+    ]
+  },
+}
+
+chatWindow.talk(convo)
+</script>
+
+<script>
+  const canvas = document.querySelector('#draw');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  ctx.strokeStyle = '#002fa7';
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.lineWidth = 20;
+  ctx.globalCompositeOperation = 'multiply';
+  let hue = 0;
+  
+  let isDrawing = false;
+  let lastX = 0;
+  let lastY = 0;
+  let direction = true;
+  
+  function draw(e) {
+    if (!isDrawing) return; //Stops the fn from running when not moused down
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    [lastX, lastY] = [e.offsetX, e.offsetY]; //This is Array Destructuring—see the section below
+    hue++;
+    if (hue >= 360) { hue = 0; }
+    if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+      direction = !direction;
+    }
+    if (direction) {
+      ctx.lineWidth--;
+    }
+    else {
+      ctx.lineWidth++;
+    }
+  }
+  
+  canvas.addEventListener('mousedown', (e) => {
+    isDrawing = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY]; //This is Array Destructuring—see the section below
+  });
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', () => isDrawing = false);
+  canvas.addEventListener('mousout', () => isDrawing = false);
+  </script>
+  
+  
+
+
+
+
+</body>
+
+
+
+
